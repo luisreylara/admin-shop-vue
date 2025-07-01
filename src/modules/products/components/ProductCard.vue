@@ -2,7 +2,7 @@
     <article class="rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-300 ">
         <a href="#">
             <div class="relative flex items-end overflow-hidden rounded-xl">
-                <img :src="product.images[0]" alt="product.title" />
+                <img :src="product.images[0]" alt="product.title" class="h-[250px] object-cover" />
                 <div
                     class="flex items-center space-x-1.5 rounded-lg bg-blue-500 px-4 py-1.5 text-white duration-100 hover:bg-blue-600">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
