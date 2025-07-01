@@ -50,6 +50,7 @@
     </div>
     <!-- Product List -->
     <ProductList v-else :products="products" />
+    <ButtonNavigation :has-more-data="true" :is-first-page="true" :page="1"></ButtonNavigation>
 
 </template>
 
@@ -58,6 +59,7 @@ import * as Vue from 'vue';
 import { getProducts } from '@/modules/products/actions';
 import { useQuery } from '@tanstack/vue-query';
 import ProductList from '@/modules/products/components/ProductList.vue';
+import ButtonNavigation from '@/modules/common/components/ButtonNavigation.vue';
 
 const { data: products = [] } = useQuery({
     queryKey: ['products', { page: 1 }],
