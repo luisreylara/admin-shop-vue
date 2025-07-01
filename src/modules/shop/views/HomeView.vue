@@ -50,21 +50,48 @@
     </div>
     <!-- Product List -->
     <ProductList v-else :products="products" />
-    <ButtonNavigation :has-more-data="true" :is-first-page="true" :page="1"></ButtonNavigation>
+    <ButtonNavigation :has-more-data="!!products && products.length < 10" :is-first-page="page === 1" :page="page">
+    </ButtonNavigation>
 
 </template>
 
 <script setup lang="ts">
 import * as Vue from 'vue';
 import { getProducts } from '@/modules/products/actions';
-import { useQuery } from '@tanstack/vue-query';
+import { useQuery, useQueryClient } from '@tanstack/vue-query';
 import ProductList from '@/modules/products/components/ProductList.vue';
 import ButtonNavigation from '@/modules/common/components/ButtonNavigation.vue';
+import { useRoute } from 'vue-router';
+import { ref } from 'vue';
+import { watch } from 'vue';
+import { watchEffect } from 'vue';
+
+const route = useRoute();
+const page = ref(Number(route.query.page || 1));
+const queryClient = useQueryClient();
+
 
 const { data: products = [] } = useQuery({
-    queryKey: ['products', { page: 1 }],
-    queryFn: () => getProducts(),
+    queryKey: ['products', { page: page }],
+    queryFn: () => getProducts(page.value),
 });
+
+watch(
+    () => route.query.page,
+    (newPage) => {
+        page.value = Number(newPage || 1)
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+)
+
+watchEffect(
+    () => {
+        queryClient.prefetchQuery({
+            queryKey: ['products', { page: page.value + 1 }],
+            queryFn: () => getProducts(page.value + 1),
+        })
+    }
+)
 
 </script>
 
