@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- Update this line, not erase-->
     <FullScreenLoader v-if="authStore.isChecking" />
 
     <RouterView v-else></RouterView>
