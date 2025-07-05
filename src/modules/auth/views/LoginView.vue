@@ -36,10 +36,11 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from 'vue';
+import { reactive, watchEffect } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthStores } from '../stores/auth.stores';
 import { useToast } from 'vue-toastification';
+
 
 
 const router = useRouter();
@@ -49,13 +50,29 @@ const toast = useToast();
 const myForm = reactive({
   email: '',
   password: '',
-  rememberMe: false
+  rememberMe: false,
+
 });
 
 const onLogin = async () => {
   const ok = await authStore.login(myForm.email, myForm.password);
 
+  if (myForm.rememberMe) {
+    localStorage.setItem('email', myForm.email);
+  } else {
+    localStorage.removeItem('email');
+  }
+
   if (ok) return;
   toast.error('email/Contraseña no son correctos!')
 };
+
+watchEffect(() => {
+  const email = localStorage.getItem('email');
+  if (email) {
+    myForm.email = email;
+    myForm.rememberMe = true;
+  }
+})
+
 </script>
