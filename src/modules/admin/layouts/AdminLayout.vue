@@ -75,14 +75,16 @@
                 </div>
             </button>
             <div class="flex flex-col flex-grow p-4 overflow-auto">
-                <a class="flex items-center flex-shrink-0 h-10 px-2 text-sm font-medium rounded hover:bg-gray-300"
-                    href="#">
-                    <span class="leading-none">Item 1</span>
-                </a>
-                <a class="flex items-center flex-shrink-0 h-10 px-2 text-sm font-medium rounded hover:bg-gray-300"
-                    href="#">
-                    <span class="leading-none">Item 2</span>
-                </a>
+                <RouterLink
+                    class="flex items-center flex-shrink-0 h-10 px-2 text-sm font-medium rounded hover:bg-gray-300"
+                    to="/admin">
+                    <span class="leading-none">Dashboard</span>
+                </RouterLink>
+                <RouterLink
+                    class="flex items-center flex-shrink-0 h-10 px-2 text-sm font-medium rounded hover:bg-gray-300"
+                    to="/admin/products">
+                    <span class="leading-none">Productos</span>
+                </RouterLink>
                 <a class="flex items-center flex-shrink-0 h-10 px-2 text-sm font-medium rounded hover:bg-gray-300"
                     href="#">
                     <span class="leading-none">Item 3</span>
@@ -113,7 +115,7 @@
         </div>
         <div class="flex flex-col flex-grow">
             <div class="flex items-center flex-shrink-0 h-16 px-8 border-b border-gray-300">
-                <h1 class="text-lg font-medium">Page Title</h1>
+                <h1 class="text-lg font-medium">{{ authStore.username }}</h1>
                 <button
                     class="flex items-center justify-center h-10 px-4 ml-auto text-sm font-medium rounded hover:bg-gray-300">
                     Action 1
@@ -162,7 +164,9 @@
 </template>
 
 <script setup lang="ts">
+import { useAuthStores } from '@/modules/auth/stores/auth.stores';
 
+const authStore = useAuthStores();
 </script>
 
 <style scoped></style>
