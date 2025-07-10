@@ -4,7 +4,7 @@
         <hr class="my-4" />
     </div>
 
-    <form class="grid grid-cols-1 sm:grid-cols-2 bg-white px-5 gap-5">
+    <form @submit="onSubmit" class="grid grid-cols-1 sm:grid-cols-2 bg-white px-5 gap-5">
 
         <div class="first-col">
             <!-- Primera parte del formulario -->
@@ -22,27 +22,32 @@
 
             <div class="mb-4">
                 <label for="description" class="form-label">Descripción</label>
-                <textarea class="form-control" id="description"></textarea>
+                <CustomTextArea v-model="description" v-bind="descriptionAttrs" :error="errors.description">
+                </CustomTextArea>
             </div>
 
             <div class="flex flex-row gap-3">
                 <div class="mb-4">
                     <label for="price" class="form-label">Precio</label>
-                    <input type="number" id="price" aria-describedby="helper-text-explanation" class="form-control"
-                        placeholder="1" />
+                    <CustomInput v-model.number="price" v-bind="priceAttrs" :error="errors.price" />
                 </div>
 
                 <div class="mb-4">
                     <label for="stock" class="form-label">Inventario</label>
-                    <input type="number" id="stock" aria-describedby="helper-text-explanation" class="form-control"
-                        placeholder="1" />
+                    <CustomInput v-model.number="stock" v-bind="stockAttrs" :error="errors.stock" />
                 </div>
             </div>
 
             <div>
                 <label for="sizes" class="form-label">Tallas</label>
-                <button v-for="size of allSizes" key="size" type="button" class="bg-blue-100 p-2 rounded w-14 mr-2">{{
-                    size }}</button>
+                <button v-for="size of allSizes" key="size" @click="toggleSizes(size)" type="button" :class="['p-2 rounded w-14 mr-2 flex-1',
+        {
+            'bg-blue-500 text-white': hasSize(size),
+            'bg-blue-100': !hasSize(size),
+        },
+    ]">
+                    {{ size }}
+                </button>
             </div>
         </div>
 
@@ -51,13 +56,10 @@
             <label for="stock" class="form-label">Imágenes</label>
             <!-- Row with scrollable horizontal -->
             <div class="flex p-2 overflow-x-auto space-x-8 w-full h-[265px] bg-gray-200 rounded">
-                <div class="flex-shrink-0">
-                    <img src="https://placehold.co/250" alt="imagen" class="w-[250px] h-[250px]" />
+                <div v-for="image of images" :key="image.value" class="flex-shrink-0">
+                    <img :src="image.value" alt="title" class="w-[250px] h-[250px] rounded" />
                 </div>
 
-                <div class="flex-shrink-0">
-                    <img src="https://placehold.co/250" alt="imagen" class="w-[250px] h-[250px]" />
-                </div>
             </div>
             <!-- Upload image -->
             <div class="col-span-2 my-2">
@@ -68,12 +70,13 @@
 
             <div class="mb-4">
                 <label for="stock" class="form-label">Género</label>
-                <select class="form-control">
+                <select v-model="gender" v-bind="genderAttrs" class="form-control">
                     <option value="">Seleccione</option>
                     <option value="kid">Niño</option>
                     <option value="women">Mujer</option>
                     <option value="men">Hombre</option>
                 </select>
+                <span class="text-red-400" v-show="errors.gender">{{ errors.gender }}</span>
             </div>
 
             <!-- Botón para guardar -->
@@ -86,12 +89,12 @@
     </form>
 
     <div class="grid grid-cols-2 mt-2">
-        <div class="bg-blue-200 p-2">
-            {{ values }}
-        </div>
-        <div class="bg-red-200 p-2">
-            {{ errors }}
-        </div>
+        <pre class="bg-blue-200 p-2">
+            {{ JSON.stringify(values, null, 2) }}
+        </pre>
+        <pre class="bg-red-200 p-2">
+            {{ JSON.stringify(errors, null, 2) }}
+        </pre>
     </div>
 
 </template>
