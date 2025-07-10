@@ -10,6 +10,7 @@
 </template>
 
 <script setup lang="ts">
+
 import { VueQueryDevtools } from '@tanstack/vue-query-devtools'
 import { useAuthStores } from './modules/auth/stores/auth.stores';
 import { AuthStatus } from './modules/auth/interfaces';
