@@ -8,7 +8,7 @@ import CustomInput from '@/modules/common/components/CustomInput.vue';
 import CustomTextArea from '@/modules/common/components/CustomTextArea.vue';
 
 const validationSchema = yup.object({
-  title: yup.string().required().min(3),
+  title: yup.string().required('mensaje personalizado').min(3, 'debe de ser treeees'),
   slug: yup.string().required().min(5),
   price: yup.string().required(),
   stock: yup.string().required(),
@@ -40,7 +40,7 @@ export default defineComponent({
       retry: false,
     });
 
-    const { defineField, values, errors, handleSubmit, resetForm } = useForm({
+    const { defineField, values, errors, handleSubmit, resetForm, meta } = useForm({
       validationSchema,
       initialValues: product.value,
     });
@@ -106,6 +106,7 @@ export default defineComponent({
       genderAttrs,
       errors,
       images,
+      meta,
 
       allSizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
       onSubmit,
