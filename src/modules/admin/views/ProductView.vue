@@ -75,13 +75,15 @@
                     <option value="kid">Niño</option>
                     <option value="women">Mujer</option>
                     <option value="men">Hombre</option>
+                    <option value="unisex">Unisex</option>
                 </select>
                 <span class="text-red-400" v-show="errors.gender">{{ errors.gender }}</span>
             </div>
 
             <!-- Botón para guardar -->
             <div class="my-4 text-right">
-                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                <button :disabled="isPending" type="submit"
+                    class="disable:bg-gray-100 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     Guardar
                 </button>
             </div>
