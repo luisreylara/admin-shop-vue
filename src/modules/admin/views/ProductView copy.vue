@@ -65,7 +65,7 @@
             <div class="col-span-2 my-2">
                 <label for="image" class="form-label">Subir imagen</label>
 
-                <input multiple type="file" id="image" class="form-micontrol" />
+                <input multiple type="file" id="image" class="form-control" />
             </div>
 
             <div class="mb-4">
@@ -117,10 +117,5 @@
 
 .form-control {
     @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none;
-}
-
-.form-micontrol {
-    @apply block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 file:bg-gray-50 file:border-0 file:me-4 file:py-3 file:px-4;
-
 }
 </style>

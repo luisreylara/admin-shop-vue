@@ -36,6 +36,7 @@ export default defineComponent({
       data: product,
       isError,
       isLoading,
+      refetch,
     } = useQuery({
       queryKey: ['product', props.productId],
       queryFn: () => getProductById(props.productId),
@@ -107,11 +108,19 @@ export default defineComponent({
       if (!value) return;
 
       toast.success('Producto actualizado correctamente!');
+      router.replace(`/admin/products/${updateProduct.value.id}`);
 
       resetForm({
         values: updateProduct.value,
       });
     });
+
+    watch(
+      () => props.productId,
+      () => {
+        refetch();
+      },
+    );
 
     return {
       values,
